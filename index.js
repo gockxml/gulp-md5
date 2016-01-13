@@ -5,11 +5,12 @@ var path = require('path')
 
 module.exports = function(options) {
   var separator,
-    size;
+    size, dict;
 
   if (typeof options === 'object') {
     separator = options.separator || '_';
     size = options.size | 0;
+    dict = options.dict || {}
   } else {
     size = options | 0;
     separator = '_';
@@ -24,7 +25,9 @@ module.exports = function(options) {
     var md5Hash = calcMd5(file, size),
       filename = path.basename(file.path),
       dir;
-
+    
+    dict[filename] = md5Hash;
+    
     if (file.path[0] == '.') {
       dir = path.join(file.base, file.path);
     } else {
