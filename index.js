@@ -26,7 +26,7 @@ module.exports = function(options) {
       filename = path.basename(file.path),
       dir;
     
-    dict[filename] = md5Hash;
+    var oldName = filename;
     
     if (file.path[0] == '.') {
       dir = path.join(file.base, file.path);
@@ -38,6 +38,8 @@ module.exports = function(options) {
     filename = filename.split('.').map(function(item, i, arr) {
       return i == arr.length - 2 ? item + separator + md5Hash : item;
     }).join('.');
+
+    dict[oldName] = filename;
 
     file.path = path.join(dir, filename);
 
